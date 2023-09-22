@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Personal</title>
+  <link th:rel="stylesheet" th:href="@{assets/bootstrap-slider/css/bootstrap-slider.css}"/>
+  <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+  <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+</head>
+<body style="background-image: linear-gradient(to right top, #a2beeb, #8ecfee, #8edde5, #a4e7d5, #c7eec7)">
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Sign Out"/>
+</form>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  <div class="container">
+    <a class="navbar-brand" href="/mainPage">MyBank</a>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/mainPage">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/creditCard">Create card</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row" th:fragment="list" xmlns:th="http://www.thymeleaf.org">
+        <div th:each="card : ${cardList}" class="col-sm-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${card.getShowNumber()}">Number</h5>
+              <p class="card-text" th:text="${card.getBalance()}">Balance</p>
+              <p class="card-text" th:text="${card.getCurrency()}">Currency</p>
+              <p class="card-text" th:text="${card.getDate()}">Date</p>
+              <form action="#" th:action="@{/manageCard/} + ${{card.id}}" method="get">
+                <button class="btn btn-primary" th:id="'table_entry_childs_button_' + ${card.getId()}" type="submit">
+                  <i>manage</i>
+                </button>
+              </form>
+              <form action="#" th:action="@{/history/} + ${{card.id}}" method="get">
+                <button class="btn btn-primary" th:id="'table_entry_childs_button_' + ${card.getId()}" type="submit">
+                  <i>history</i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table width="200" bgcolor="#AFEEEE" border="1" style="position: absolute; right: 150px; top: 150px">
+  <tr th:each="instance : ${exchangeList}">
+    <td th:text="${instance.key}">keyvalue</td>
+    <td th:text="${instance.value}">num</td>
+  </tr>
+</table>
+
+
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:rel="stylesheet" th:src="@{assets/bootstrap-slider/bootstrap-slider.js}"></script>
+
+<script>
+  $("#priceRange").slider({});
+  $("#priceRange").on("slideStop", function (stopEvent) {
+    var range = stopEvent.value;
+    $("#rangeMin").val(range[0]);
+    $("#rangeMax").val(range[1]);
+
+    $.get("/products?min=" + range[0] + "&max=" + range[1], function (data) {
+      $("#products").html(data);
+    });
+  });
+</script>
+
+</body>
+</html>

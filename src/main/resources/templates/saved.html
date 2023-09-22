@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:rel="stylesheet" th:href="@{http://localhost:8080/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:rel="stylesheet" th:href="@{http://localhost:8080/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Price filter range</h2>
+    <p>Min <strong th:text="${minRange}"></strong></p>
+    <p>Max <strong th:text="${maxRange}"></strong></p>
+
+    <a th:href="@{/history.html}" class="btn btn-primary">Go back</a>
+</div>
+</body>
+</html>

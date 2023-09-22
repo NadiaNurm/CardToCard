@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Log in</title>
+    <link th:href="@{/styles/cssandjs/creditCard.css}" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika:400' rel='stylesheet' type='text/css'>
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-slider/css/bootstrap-slider.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/mainPage">MyBank</a>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/mainPage">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/creditCard">Create card</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h1 class="title">Create me!</h1>
+<form th:action="@{/creditCard}" method="POST">
+    <div class="card">
+        <div class="card__front card__part">
+            <p class="card_numer" th:text="${cardNumber}"></p>
+            <div class="card__space-75">
+                <span class="card__label">Card holder</span>
+                <p class="card__info" th:text="${fullName}"></p>
+            </div>
+            <div class="card__space-25">
+                <span class="card__label">Expires</span>
+                <p class="card__info" th:text="${date}"></p>
+            </div>
+            <div>
+                <select name="currencies">
+                    <option th:each="c : ${currencies}" th:value="${c}" th:text="${c}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <input type="hidden" name="cardNumber" th:value="${cardNumber}">
+    <input type="hidden" name="date" th:value="${date}">
+    <input type="hidden" name="userId" th:value="${userId}">
+    <div style="text-align: center;"><input type="submit" value="Create"/></div>
+</form>
+<table width="200" bgcolor="#AFEEEE" border="1" style="position: absolute; right: 150px; top: 150px">
+    <tr th:each="instance : ${exchangeList}">
+        <td th:text="${instance.key}">keyvalue</td>
+        <td th:text="${instance.value}">num</td>
+    </tr>
+</table>
+</body>
+</html>

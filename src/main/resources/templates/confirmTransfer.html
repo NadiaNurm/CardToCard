@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm</title>
+    <link th:href="@{/styles/cssandjs/registration.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/cssandjs/creditCard.css}" rel="stylesheet"/>
+</head>
+<body>
+<h1 class="title">Recipient's card</h1>
+<div class="card">
+    <div class="card__front card__part">
+        <p class="card_numer" th:text="${transferNumber}"></p>
+        <div class="card__space-75">
+            <span class="card__label">Card holder</span>
+            <p class="card__info" th:text="${fullNameTarget}"></p>
+        </div>
+        <div class="card__space-25">
+            <span class="card__label">Currency</span>
+            <p class="card__info" th:text="${currency}"></p>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <h2 class="card-title text-center">Transfer Amount</h2>
+                <div class="card-body py-md-4">
+                    <form th:action="@{/confirmTransfer}" method="post">
+                        <input type="hidden" name="cardId" th:value="${cardId}">
+                        <input type="hidden" name="transferNumber" th:value="${transferNumber}">
+                        <div class="form-group">
+                            <input type="text" class="form-control"  name="transferAmount"  placeholder="Transfer Amount" th:value="${error}">
+                        </div>
+
+                        <select name="currencies">
+                            <option th:each="c : ${currencies}" th:value="${c}" th:text="${c}" th:selected="${c==defaultCurr}"></option>
+                        </select>
+
+                        <div><input type="submit" value="Confirm"/></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
